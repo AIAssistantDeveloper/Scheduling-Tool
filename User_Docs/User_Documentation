@@ -1,0 +1,58 @@
+# User Documentation for Scheduling Utility #
+
+# Overview
+The Scheduling Utility is a simple web application built with Flask 
+that allows users to book appointments. Users can input their name 
+and desired appointment time, which are stored in a database for 
+retrieval.
+
+## Features
+ - Book Appointments: Users can book appointments by filling out a 
+form with their name and desired time.
+
+ - View Appointments: All booked appointments are displayed on the 
+homepage.
+
+ - Persistent Storage: Appointments are stored in a database, 
+ensuring data persistence.
+
+-------------------------------------------------------------------------
+
+# Getting Started #
+
+# 1. Clone the Repository: 
+git clone <repository-url>
+cd scheduling_app
+
+
+# 2. Install Dependencies:
+pip install -r requirements.txt
+
+
+# 3. Set Up Environment Variables: Create a .env file in the project directory and add the following:
+FLASK_ENV=development  # or production
+DATABASE_URL=sqlite:///appointments.db  # Adjust according to your database choice
+
+-------------------------------------------------------------------------
+
+# 4. Run the Application:
+ - Start the application using: python app.py
+
+
+# 5. Access the App:
+ - Open your web browser and go to: http://127.0.0.1:5000
+
+-------------------------------------------------------------------------
+
+# Booking an Appointment #
+
+ - Fill in your name and the desired appointment time in the provided 
+form.
+
+ - Click on "Book Appointment" to submit.
+
+
+# Viewing Appointments #
+
+ - The appointments will be listed below the booking form on the home 
+page.
