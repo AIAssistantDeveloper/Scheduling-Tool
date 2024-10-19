@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, quote, current_app
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 
