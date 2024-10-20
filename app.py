@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, request, render_template, redirect, quote, current_app
+from flask import Flask, request, render_template, redirect, url_for, current_app
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 
@@ -27,6 +27,11 @@ class Appointment(db.Model):
 # Create the database tables
 with app.app_context():
     db.create_all()
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    logging.error(f"An error occurred: {e}")
+    return "An internal error occurred.", 500
 
 # Home route to display appointments
 @app.route('/')
