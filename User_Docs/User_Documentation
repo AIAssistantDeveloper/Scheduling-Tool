@@ -36,23 +36,23 @@ DATABASE_URL=sqlite:///appointments.db  # Adjust according to your database choi
 -------------------------------------------------------------------------
 
 # 4. Run the Application:
- - Start the application using: python app.py
-
+ - Start the application using:
+    | [1] python app.py |
+    | [2] flask run     |
 
 # 5. Access the App:
- - Open your web browser and go to: http://127.0.0.1:5000
+ - Open your web browser and go to:
+    | http://127.0.0.1:5000 |
 
 -------------------------------------------------------------------------
 
 # Booking an Appointment #
 
- - Fill in your name and the desired appointment time in the provided 
-form.
+    | 1.) Fill in your name & appointment time in the form. |
 
- - Click on "Book Appointment" to submit.
+    | 2.) Click on "Book Appointment" to submit.            |
 
 
 # Viewing Appointments #
 
- - The appointments will be listed below the booking form on the home 
-page.
+   | The appointments will be listed below the booking form on the home page. |
