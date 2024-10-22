@@ -14,7 +14,7 @@ app = Flask(__name__)
 load_dotenv()
 
 # Configure the SQLAlchemy database URI (adjust this to your database)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///data/data/com.termux/files/home/projects/render_deployed/Scheduling-Tool/instanceappointments.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:////data/data/com.termux/files/home/projects/render_deployed/Scheduling-Tool/instanceappointments.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
