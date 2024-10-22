@@ -50,6 +50,12 @@ def book():
         db.session.commit()
     return redirect(url_for('home'))
 
+# Route to check that appointments are being saved in the SQLite Database
+@app.route('/appointments', methods=['GET'])
+def view_appointments():
+    appointments = Appointment.query.all()
+    return jsonify([{'name': appt.name, 'time': appt.time} for appt in appointments])
+
 # Run the app
 if __name__ == '__main__':
     app.run(debug=os.getenv('FLASK_DEBUG', 'False') == 'True')
