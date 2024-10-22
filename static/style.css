@@ -11,12 +11,14 @@ body {
     line-height: 1.6;
     background-color: #f4f4f4;
     color: #333;
+    padding: 2rem;
 }
 
 header {
     background-color: #0047ab;
     padding: 1rem 2rem;
     color: #fff;
+    margin-bottom: 2rem;
 }
 
 header nav {
@@ -62,98 +64,55 @@ header .primary-btn:hover {
     background-color: #ff4500;
 }
 
-#hero {
-    background-image: url('hero-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #fff;
-}
-
-#hero .hero-content {
+main {
     max-width: 800px;
+    margin: 0 auto;
 }
 
-#hero h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-#hero p {
-    font-size: 1.25rem;
+.appointment-section, .appointments-list {
     margin-bottom: 2rem;
 }
 
-section {
-    padding: 2rem;
-    text-align: center;
+.appointment-form {
+    display: flex;
+    flex-direction: column;
 }
 
-#about p {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-#features {
-    background-color: #e9e9e9;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1.5rem;
-}
-
-.feature {
-    padding: 1.5rem;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#schedule form {
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-#schedule label {
-    display: block;
+.appointment-form label {
     margin-bottom: 0.5rem;
+    font-weight: bold;
 }
 
-#schedule input, #schedule select {
-    width: 100%;
-    padding: 0.75rem;
+.appointment-form input {
     margin-bottom: 1rem;
-    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-button {
-    width: 100%;
-    padding: 1rem;
-    background-color: #0047ab;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
+.appointment-form button {
+    align-self: flex-start;
+    background-color: #ff6600;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #003a87;
+.appointment-form button:hover {
+    background-color: #ff4500;
+}
+
+.appointments-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.appointments-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ccc;
 }
 
 footer {
-    background-color: #0047ab;
-    color: #fff;
-    padding: 1rem 0;
     text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #666;
 }
