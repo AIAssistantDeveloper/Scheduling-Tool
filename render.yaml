@@ -25,4 +25,4 @@ services:
   region: oregon
   buildCommand: pip install -r requirements.txt
   startCommand: gunicorn app:app
-version: "2"
+version: "1"

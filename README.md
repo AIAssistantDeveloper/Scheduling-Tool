@@ -25,6 +25,11 @@ specified).
 # Install Dependencies: #
  
  - pip install -r requirements.txt
+ # If you run into any issue with installing lxml 
+ # (especially when using Termux, you can just make sure 
+ # you have the following packages installed: `libxml2 
+ # libxslt clang`. Command => "pkg install libxml2 libxslt clang"
+
 
 # Set Up Environment Variables: Create a .env file in the project directory and add: 
  
