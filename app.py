@@ -14,7 +14,7 @@ app = Flask(__name__)
 load_dotenv()
 
 # Configure the SQLAlchemy database URI (adjust this to your database)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///appointments.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:////instance/appointments.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -39,15 +39,19 @@ def home():
     appointments = Appointment.query.all()
     return render_template('schedule.html', appointments=appointments)
 
-# Route to book an appointment
 @app.route('/book', methods=['POST'])
 def book():
     name = request.form.get('name')
     time = request.form.get('time')
     if name and time:
-        new_appointment = Appointment(name=name, time=time)
-        db.session.add(new_appointment)
-        db.session.commit()
+        try:
+            new_appointment = Appointment(name=name, time=time)
+            db.session.add(new_appointment)
+            db.session.commit()
+            logging.info(f"Appointment booked for {name} at {time}.")
+        except Exception as e:
+            db.session.rollback()  # Rollback in case of failure
+            logging.error(f"Failed to book appointment: {e}")
     return redirect(url_for('home'))
 
 # Route to check that appointments are being saved in the SQLite Database
