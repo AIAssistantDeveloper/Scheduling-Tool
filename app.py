@@ -3,30 +3,27 @@ import logging
 from flask import Flask, request, render_template, redirect, url_for, current_app
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
+from models import db
+
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tony:whpu4CqOykeHuw2sdeQUrETBkHfCp24u@dpg-csdhupd6l47c73dbe57g-a/schedule_db_zdhr'
+db = SQLAlchemy(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)
+
+load_dotenv()
+# Create the database tables
+with app.app_context():
+    db.create_all()  # Creates tables if they don't exist
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
-
-# Initialize Flask app
-app = Flask(__name__)
-
-# Load environment variables from a .env file
-load_dotenv()
-
-# Configure the SQLAlchemy database URI (adjust this to your database)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:////data/data/com.termux/files/home/projects/render_deployed/Scheduling-Tool/instance/appointments.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
 # Define the Appointment model
 class Appointment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     time = db.Column(db.String(100), nullable=False)
-
-# Create the database tables
-with app.app_context():
-    db.create_all()
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -59,6 +56,17 @@ def book():
 def view_appointments():
     appointments = Appointment.query.all()
     return jsonify([{'name': appt.name, 'time': appt.time} for appt in appointments])
+
+from flask import request, jsonify
+from models import db, Schedule
+
+@app.route('/add_schedule', methods=['POST'])
+def add_schedule():
+    data = request.get_json()
+    new_schedule = Schedule(user_id=data['user_id'], event=data['event'], date=data['date'])
+    db.session.add(new_schedule)
+    db.session.commit()
+    return jsonify({'message': 'Schedule added successfully!'}), 201
 
 # Run the app
 if __name__ == '__main__':
