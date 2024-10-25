@@ -1,66 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduling Tool</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header>
-        <nav>
-            <div>
-                <h1>Scheduling Tool</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/appointments">View Appointments</a></li>
-            </ul>
-            <a href="#" class="btn primary-btn">Contact Us</a>
-        </nav>
-    </header>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta 
+    name="viewport" content="width=device-width, initial-scale=1.0"> <title>{% 
+    block title %}Scheduling App{% endblock %}</title> <link rel="stylesheet" 
+    href="{{ url_for('static', filename='style.css') }}">
+</head> <body> <header> <nav> <div> <h1>Scheduling Tool</h1> </div> <ul 
+            class="nav-links"> <li><a href="/">Home</a></li>
+                <li><a href="/appointments">View Appointments</a></li> </ul> <a 
+            href="#" class="btn primary-btn">Contact Us</a>
+        </nav> </header>
 
-    <main>
-<!-- Add this to the head or bottom of the schedule.html -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('appointmentForm');
-        
-        form.addEventListener('submit', (e) => {
-            const name = document.getElementById('name').value;
-            const time = document.getElementById('time').value;
-            
-            if (!name || !time) {
-                e.preventDefault(); // Prevent form submission
-                alert('Please fill out both name and time fields.');
-            }
-        });
-    });
-</script>
+    {% block content %}{% endblock %}
 
-<!-- Your main form -->
-<form id="appointmentForm" method="POST" action="{{ url_for('book') }}">
-    <input type="text" name="name" id="name" placeholder="Your Name" required>
-    <input type="datetime-local" name="time" id="time" required>
-    <button type="submit">Book Appointment</button>
+<!-- schedule.html --> {% extends "base.html" %} {% block title %}Schedule 
+Booking{% endblock %} {% block content %}
+    <h1>Book a Schedule</h1> <form id="scheduleForm"> <!-- form fields here --> 
+    </form>
+{% endblock %}
+
+    <main> <!-- Your main form --> <form id="appointmentForm" method="POST" 
+action="{{ url_for('book') }}">
+    <input type="text" name="name" id="name" placeholder="Your Name" required> 
+    <input type="datetime-local" name="time" id="time" required> <button 
+    type="submit">Book Appointment</button>
 </form>
 
-<!-- Flash message container -->
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div id="flash-message" class="flash-message">
-      <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
-{% endwith %}
+<!-- Flash message container --> {% with messages = 
+get_flashed_messages(with_categories=True) %}
+  {% if messages %} {% for category, message in messages %} <div 
+      class="flash-message flash-{{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %}
+
     </main>
 
-    <footer>
-        <p>&copy; 2024 Scheduling Tool. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+    <footer> <p>&copy; 2024 Scheduling Tool. All rights reserved.</p> </footer> 
+<script src=="{{ url_for ('static', filename='schedule.js') }}"> </body> </html>
+

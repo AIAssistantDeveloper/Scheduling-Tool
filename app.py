@@ -6,18 +6,41 @@ from dotenv import load_dotenv
 from models import db
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://tony:whpu4CqOykeHuw2sdeQUrETBkHfCp24u@dpg-csdhupd6l47c73dbe57g-a/schedule_db_zdhr'
+
+# Use environment variable for the database URI
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
+# Initialize SQLAlchemy
 db = SQLAlchemy(app)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
 
 load_dotenv()
 # Create the database tables
 with app.app_context():
     db.create_all()  # Creates tables if they don't exist
 
-# Set up logging
+# Configure logging
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Log an event when the app starts
+@app.before_first_request
+def setup_logging():
+    logger.info("Starting the scheduling app")
+
+# In routes, use logger to capture specific events
+@app.route('/book', methods=['POST'])
+def book():
+    try:
+        # booking logic here
+        db.session.commit()
+        flash("Booking successful", "success")
+        logger.info("Booking completed successfully")
+    except Exception as e:
+        db.session.rollback()
+        flash("An error occurred while booking", "error")
+        logger.error(f"Booking failed: {e}")
+    return redirect(url_for('home'))
+
 
 # Define the Appointment model
 class Appointment(db.Model):
@@ -35,21 +58,6 @@ def handle_exception(e):
 def home():
     appointments = Appointment.query.all()
     return render_template('schedule.html', appointments=appointments)
-
-@app.route('/book', methods=['POST'])
-def book():
-    name = request.form.get('name')
-    time = request.form.get('time')
-    if name and time:
-        try:
-            new_appointment = Appointment(name=name, time=time)
-            db.session.add(new_appointment)
-            db.session.commit()
-            logging.info(f"Appointment booked for {name} at {time}.")
-        except Exception as e:
-            db.session.rollback()  # Rollback in case of failure
-            logging.error(f"Failed to book appointment: {e}")
-    return redirect(url_for('home'))
 
 # Route to check that appointments are being saved in the SQLite Database
 @app.route('/appointments', methods=['GET'])

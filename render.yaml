@@ -4,25 +4,20 @@ services:
   name: Scheduling-Tool
   runtime: python
   repo: https://github.com/AIAssistantDeveloper/Scheduling-Tool
-  plan: free
-  envVars:
-  - key: HELP_ME
-    sync: false
-  - key: DATABASE_URL
-    sync: false
-  - key: FLASK_ENV
-    sync: false
-  - key: FLASK_DEBUG
-    sync: false
-  - key: FLASK_APP
-    sync: false
-  - key: DATABASE_URL
-    sync: false
-  - key: FLASK_ENV
-    sync: false
-  - key: FLASK_DEBUG
-    sync: false
+  services:
+  - env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app" # Ensure `app` is the correct module where Flask instance is created
+    envVars:
+      - key: DATABASE_URL
+        value: "postgresql://tony:whpu4CqOykeHuw2sdeQUrETBkHfCp24u@dpg-csdhupd6l47c73dbe57g-a/schedule_db_zdhr"
+      - key: SQLALCHEMY_DATABASE_URL
+        value: "DATABASE_URL"
+      - key: FLASK_ENV
+        value: "production"
+      - key: FLASK_APP
+        value: "app.py"
+      - key: FLASK_DEBUG
+        value: "false"
   region: oregon
-  buildCommand: pip install -r requirements.txt
-  startCommand: gunicorn app:app
 version: "1"
